@@ -1,26 +1,12 @@
-<p style="font-size:14px" align="right">
-<a href="https://kjnodes.com/" target="_blank">Visit our website <img src="https://user-images.githubusercontent.com/50621007/168689709-7e537ca6-b6b8-4adc-9bd0-186ea4ea4aed.png" width="30"/></a>
-<a href="https://discord.gg/QmGfDKrA" target="_blank">Join our discord <img src="https://user-images.githubusercontent.com/50621007/176236430-53b0f4de-41ff-41f7-92a1-4233890a90c8.png" width="30"/></a>
-<a href="https://kjnodes.com/" target="_blank">Visit our website <img src="https://user-images.githubusercontent.com/50621007/168689709-7e537ca6-b6b8-4adc-9bd0-186ea4ea4aed.png" width="30"/></a>
-</p>
-
-<p style="font-size:14px" align="right">
-<a href="https://hetzner.cloud/?ref=y8pQKS2nNy7i" target="_blank">Deploy your VPS using our referral link to get 20€ bonus <img src="https://user-images.githubusercontent.com/50621007/174612278-11716b2a-d662-487e-8085-3686278dd869.png" width="30"/></a>
-</p>
-
-<p align="center">
-  <img height="100" height="auto" src="https://user-images.githubusercontent.com/50621007/177221972-75fcf1b3-6e95-44dd-b43e-e32377685af8.png">
-</p>
-
 # Relay interchain-queries using the new GO v2 Relayer
 
 ## 1. Download and build binaries
 ```
-ch $HOME
+cd $HOME
 git clone https://github.com/Stride-Labs/interchain-queries.git
 cd interchain-queries
 go build
-mv interchain-queries /usr/local/bin/icq
+sudo mv interchain-queries /usr/local/bin/icq
 ```
 
 ## 2. Make home dir for icq and create configurations file
@@ -32,8 +18,8 @@ chains:
   gaia-testnet:
     key: wallet
     chain-id: GAIA
-    rpc-addr: http://<YOUR_GAIA_RPC_ADDR>:<YOUR_GAIA_RPC_PORT>         # Example: '127.0.0.1:23657'
-    grpc-addr: http://<YOUR_GAIA_GRPC_ADDR>:<YOUR_GAIA_GRPC_PORT>      # Example: '127.0.0.1:23090'
+    rpc-addr: http://127.0.0.1:23657      # use your own Stride RPC endpoint here
+    grpc-addr: http://127.0.0.1:23090     # use your own Stride GRPC endpoint here
     account-prefix: cosmos
     keyring-backend: test
     gas-adjustment: 1.2
@@ -47,8 +33,8 @@ chains:
   stride-testnet:
     key: wallet
     chain-id: STRIDE-TESTNET-2
-    rpc-addr: http://<YOUR_STRIDE_RPC_ADDR>:<YOUR_STRIDE_RPC_PORT>      # Example: '127.0.0.1:16657'
-    grpc-addr: http://<YOUR_STRIDE_RPC_ADDR>:<YOUR_STRIDE_GRPC_PORT>    # Example: '127.0.0.1:16090'
+    rpc-addr: http://127.0.0.1:16657      # use your own Gaia GRPC endpoint here
+    grpc-addr: http://127.0.0.1:16090     # use your own Gaia GRPC endpoint here
     account-prefix: stride
     keyring-backend: test
     gas-adjustment: 1.2
@@ -63,7 +49,8 @@ cl: {}
 EOF
 ```
 
-## 3. Add wallet
+## 3. Import wallets
+> NOTE: Please use the same wallet you have used for relayer task, as it is the only way to prove that icq runs on your behalf!
 ```
 icq keys restore --chain stride-testnet wallet
 icq keys restore --chain gaia-testnet wallet
